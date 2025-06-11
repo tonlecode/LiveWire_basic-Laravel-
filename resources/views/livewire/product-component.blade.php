@@ -1,70 +1,81 @@
-<div>
+<div class="bg-gray-50 min-h-screen p-6">
+    <div class="flex flex-wrap gap-6 justify-center">
+        <!-- Form Section -->
+        <div class="w-full max-w-md">
+            <form wire:submit.prevent="createUser"
+                class="bg-white border-2 border-orange-500 p-8 rounded-lg shadow-lg">
 
+                <h1 class="text-orange-500 font-bold text-3xl text-center mb-8">INSERT DATA</h1>
 
-    <div class="">
-        <form wire:submit.prevent="createUser"
-            class=" border border-orange-500 m-[3rem] p-6 rounded-lg shadow-md w-full max-w-md">
-
-            <h1 class="text-orange-500 font-bold text-2xl text-center mb-[4rem] mt-[-42px]">INSERT DATA</h1>
-            <p>
                 @if (session('status'))
-                    <span class="text-green-500 font-semibold text-center block mb-4">
-                        {{ session('status') }}
-
-                    </span>
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+                        <span class="font-medium">{{ session('status') }}</span>
+                    </div>
                 @endif
-            </p>
-            <div class="mb-6">
-                <label for="name" class="block mb-2 text-sm font-semibold text-orange-500">Name</label>
-                <input wire:model='name' type="text" name="name" id="name"
-                    class="w-full px-4 py-2 border border-orange-500 rounded-md focus:ring-orange-500 focus:outline-none focus:ring-2"
-                    placeholder="Enter your name" />
-            </div>
 
-            <div class="mb-6">
-                <label for="email" class="block mb-2 text-sm font-semibold text-orange-500">Email</label>
-                <input wire:model='email' type="email" name="email" id="email"
-                    class="w-full px-4 py-2 border border-orange-500 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    placeholder="Enter your email" />
-            </div>
+                <div class="space-y-6">
+                    <div>
+                        <label for="name" class="block mb-2 text-sm font-semibold text-gray-700">Name</label>
+                        <input wire:model='name' type="text" name="name" id="name"
+                            class="w-full px-4 py-3 border-2 border-orange-300 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                            placeholder="Enter your name" />
+                    </div>
 
-            <div class="mb-6">
-                <label for="password" class="block mb-2 text-sm font-semibold text-orange-500">Password</label>
-                <input wire:model='password' type="password" name="password" id="password"
-                    class="w-full px-4 py-2 border border-orange-500 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                    placeholder="Enter your password" />
-            </div>
+                    <div>
+                        <label for="email" class="block mb-2 text-sm font-semibold text-gray-700">Email</label>
+                        <input wire:model='email' type="email" name="email" id="email"
+                            class="w-full px-4 py-3 border-2 border-orange-300 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                            placeholder="Enter your email" />
+                    </div>
 
-            <button type="submit"
-                class="p-3 float-end border mt-3 border-orange-600 hover:bg-orange-500 text-orange-500 hover:text-white font-semibold py-3 rounded-md transition-colors duration-300">
-                Submit
-            </button>
-        </form>
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-semibold text-gray-700">Password</label>
+                        <input wire:model='password' type="password" name="password" id="password"
+                            class="w-full px-4 py-3 border-2 border-orange-300 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                            placeholder="Enter your password" />
+                    </div>
+                </div>
+
+                <button type="submit"
+                    class="w-full mt-8 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md hover:shadow-lg">
+                    Submit
+                </button>
+            </form>
+        </div>
+
+        <!-- Table Section -->
+        <div class="w-full max-w-4xl">
+            <div class="bg-white border-2 border-orange-500 rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">User List</h2>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-orange-50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Name</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Email</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Password</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            @foreach ($users as $user)
+                                <tr class="hover:bg-orange-50 transition-colors">
+                                    <td class="px-6 py-4">{{ $user->name }}</td>
+                                    <td class="px-6 py-4">{{ $user->email }}</td>
+                                    <td class="px-6 py-4 text-gray-400">••••••••</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex space-x-3">
+                                            <button class="text-blue-600 hover:text-blue-800 font-medium">Edit</button>
+                                            <button class="text-red-600 hover:text-red-800 font-medium">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-
-
-    {{-- List data --}}
-    <div class="max-w-4xl mx-auto mt-[-8rem] mr-[15rem] p-6 rounded-2xl shadow-lg border border-orange-500">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">User List</h2>
-
-        <table class="table-auto w-full text-sm text-left text-gray-600">
-            <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
-                <tr>
-                    <th class="px-4 py-3">Name</th>
-                    <th class="px-4 py-3">Email</th>
-                    <th class="px-4 py-3">Password</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-                @foreach ($users as $user)
-                    <tr class="hover:bg-gray-50 transition duration-200">
-                        <td class="px-4 py-3 font-medium">{{ $user->name }}</td>
-                        <td class="px-4 py-3">{{ $user->email }}</td>
-                        <td class="px-4 py-3 text-gray-400">••••••••</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
 </div>
