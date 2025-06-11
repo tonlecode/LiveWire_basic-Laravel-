@@ -11,6 +11,8 @@ class ProductComponent extends Component
     public $email;
     public $password;
     public $users;
+    public $userId;
+    // public $isEditing ;
 
 
 
@@ -23,16 +25,44 @@ class ProductComponent extends Component
 
     public function createUser()
     {
-        $user = User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => Hash::make($this->password),
-        ]);
-        session()->flash('status', 'Insert data successfully');
-    }
+        if($this->userId){
+            $user = User::find($this->userId);
+            $user->name = $this->name;
+            $user->email = $this->email;
+            if($this->password){
+                $user->password = Hash::make($this->password);
+            }
+            $user->save();
 
-    //    public function listData(){
+            session()->flash('status', 'Update data successfully');
+        }
+        else{
 
-    //     $user = User::all();
-    // }
+            $user = User::create([
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => Hash::make($this->password),
+            ]);
+            session()->flash('status', 'Insert data successfully');
+        }
+        $this->reset(['name', 'email', 'password', 'userId']);
+        }
+
+
+public function edit($id)
+{
+    $this->isEditing = true;
+    $this->userId = $id;
+    $user = User::find($id);
+    $this->name = $user->name;
+    $this->email = $user->email;
+}
+
+public function delete($id)
+{
+    User::find($id)->delete();
+    session()->flash('status', 'User deleted successfully');
+}
+
+
 }

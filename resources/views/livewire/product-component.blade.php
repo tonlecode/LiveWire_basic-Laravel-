@@ -2,8 +2,7 @@
     <div class="flex flex-wrap gap-6 justify-center">
         <!-- Form Section -->
         <div class="w-full max-w-md">
-            <form wire:submit.prevent="createUser"
-                class="bg-white border-2 border-orange-500 p-8 rounded-lg shadow-lg">
+            <form wire:submit.prevent="createUser" class="bg-white border-2 border-orange-500 p-8 rounded-lg shadow-lg">
 
                 <h1 class="text-orange-500 font-bold text-3xl text-center mb-8">INSERT DATA</h1>
 
@@ -66,8 +65,10 @@
                                     <td class="px-6 py-4 text-gray-400">••••••••</td>
                                     <td class="px-6 py-4">
                                         <div class="flex space-x-3">
-                                            <button class="text-blue-600 hover:text-blue-800 font-medium">Edit</button>
-                                            <button class="text-red-600 hover:text-red-800 font-medium">Delete</button>
+                                            <button wire:click="edit({{ $user->id }})"
+                                                class="text-blue-600 hover:text-blue-800 font-medium">Edit</button>
+                                            <button wire:click="delete({{ $user->id }})"
+                                                class="text-red-600 hover:text-red-800 font-medium">Delete</button>
                                         </div>
                                     </td>
                                 </tr>
